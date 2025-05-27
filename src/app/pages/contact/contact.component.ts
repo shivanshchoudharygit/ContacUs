@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { TitleCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule, TitleCasePipe],
   template: `
     <h2>Contact Us</h2>
     <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
@@ -15,7 +17,10 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
       <div *ngIf="contactForm.get('name')?.invalid && contactForm.get('name')?.touched">
         Name is required.
       </div>
-      
+
+      <p *ngIf="contactForm.get('name')?.value">
+        Name (formatted): {{ contactForm.get('name')?.value | titlecase }}
+      </p>
 
       <label>
         Email:
